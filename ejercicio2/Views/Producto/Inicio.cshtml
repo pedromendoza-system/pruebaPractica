@@ -1,0 +1,46 @@
+﻿@model List<ejercicio2.Models.Producto>
+
+@{
+    ViewBag.Title = "Productos";
+}
+
+<h2>Productos</h2>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Categoría</th>
+            <th>Proveedor</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var producto in Model)
+        {
+            <tr>
+                <td>@producto.ProductoID</td>
+                <td>@producto.Nombre</td>
+                <td>@producto.Precio.ToString("C")</td>
+                <td>@producto.Stock</td>
+                <td>@producto.CategoriaNombre</td>
+                <td>@producto.ProveedorNombre</td>
+                <td>
+                    <a href="@Url.Action("Editar", "Producto", new { id = producto.ProductoID })" class="btn btn-info">Editar</a>
+                    <form action="@Url.Action("Eliminar", "Producto")" method="post" style="display:inline;"
+                          onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
+                        <input type="hidden" name="productoID" value="@producto.ProductoID" />
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Agregar", "Producto")" class="btn btn-primary">Agregar Producto</a>
+
